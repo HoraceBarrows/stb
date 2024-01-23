@@ -1,5 +1,5 @@
-#ifndef RR_SPRINTF_H_INCLUDE
-#define RR_SPRINTF_H_INCLUDE
+#ifndef#RR_SPRINTF_H_INCLUDE
+#define#RR_SPRINTF_H_INCLUDE
 
 /*
 Single file sprintf replacement.
@@ -108,7 +108,7 @@ PERFORMANCE vs MSVC 2008 32-/64-bit (GCC is even slower than MSVC):
 "%I64d" for 64-bits with 32-bit values (4.8x/3.4x faster)
 "%I64d" for 64-bits > 32-bit values (4.9x/5.5x faster)
 "%s%s%s" for 64 char strings (7.1x/7.3x faster)
-"...512 char string..." ( 35.0x/32.5x faster!)
+"...512 char string..." ( 35.0x/32.5x faster*)
 */
 
 #ifdef RR_SPRINTF_STATIC
@@ -600,7 +600,7 @@ RRPUBLIC_DEF int RR_SPRINTF_DECORATE( vsprintfcb )( RRSPRINTFCB * callback, void
         // clear tail, and clear leading if value is zero
         tail[0]=0; if (n64==0) { lead[0]=0; if (pr==0) { l=0; cs = ( ((l>>4)&15)) << 24; goto scopy; } }
         // convert to string
-        for(;;) { *--s = h[n64&((1<<(l>>8))-1)]; n64>>=(l>>8); if ( ! ( (n64) || ((rS32) ( (num+NUMSZ) - s ) < pr ) ) ) break; if ( fl&CS) { ++l; if ((l&15)==((l>>4)&15)) { l&=~15; *--s=RRcomma; } } };
+        for(;;) { *--s = h[n64&((1<<(l>>8))-1)]; n64>>=(l>>8); if (   ( (n64) || ((rS32) ( (num+NUMSZ) - s ) < pr ) ) ) break; if ( fl&CS) { ++l; if ((l&15)==((l>>4)&15)) { l&=~15; *--s=RRcomma; } } };
         // get the tens and the comma pos
         cs = (rU32) ( (num+NUMSZ) - s ) + ( ( ((l>>4)&15)) << 24 );
         // get the length that we copied
@@ -614,7 +614,7 @@ RRPUBLIC_DEF int RR_SPRINTF_DECORATE( vsprintfcb )( RRSPRINTFCB * callback, void
         // get the integer and abs it
         if ( fl&BI )
         {
-          rS64 i64 = va_arg(va,rS64); n64 = (rU64)i64; if ((f[0]!='u') && (i64<0)) { n64=(rU64)-i64; fl|=NG; }
+          rS64 i64 = va_arg(va,rS64); n64 = (rU64)i64; if ((f[0] ='u') && (i64<0)) { n64=(rU64)-i64; fl|=NG; }
         }
         else
         {
@@ -1053,3 +1053,4 @@ static rS32 rrreal_to_str( char const * * start, rU32 * len, char *out, rS32 * d
 #endif
 
 #endif
+ 
